@@ -42,6 +42,18 @@ class NotificationService {
             notification,
             { headers })
     }
+    /**
+     * @param {string} accessToken 
+     * @param {object} notification 
+     * @returns {Promise}
+     */
+    async sendNotificatiuonPurchasesRequest(accessToken, notification) {
+        const headers = await this.getCommonHeaders(accessToken)
+        const postNotResp = await AXIOS_NOTIFICATION.post('/v2/Notification.svc/Notifications',
+            notification,
+            { headers })
+        console.log('notification sended')
+    }
 
     async createNotificationType(accessToken, notificationType) {
         const headers = await this.getCommonHeaders(accessToken)
@@ -60,13 +72,37 @@ class NotificationService {
             NavigationTargetObject: 'LeaveRequest',
             Priority: 'High',
             ActorId: 'NAIRA',
-            ActorType: '', 'ActorDisplayText': '',
+            ActorType: '',
+            ActorDisplayText: '',
             ActorImageURL: 'https://scn.sap.com/people/guest/avatar/NAIRA.png',
             Properties: [
                 { Key: 'requester_email', Language: 'en', Value: PropertiesKey['requester_email'], Type: 'String', IsSensitive: false },
                 { Key: 'from', Language: 'en', Value: PropertiesKey['from'], Type: 'String', IsSensitive: true },
                 { Key: 'to', Language: 'en', Value: PropertiesKey['to'], Type: 'String', IsSensitive: true },
                 { Key: 'count_total', Language: 'en', Value: PropertiesKey['from'], Type: 'Integer', IsSensitive: true }
+            ],
+            Recipients: othersProp['Recipients']
+        }
+        return notification;
+    }
+    buildNotificationForPurchasesRequest({ PropertiesKey, ...othersProp }) {
+        const notification = {
+            OriginId: 'purchase-req-dest',
+            NotificationTypeKey: 'PurchaseRequest',
+            NotificationTypeVersion: '0.1',
+            NavigationTargetAction: `display&/detail/${PropertiesKey['number']}`,
+            NavigationTargetObject: 'prapproval',
+            Priority: 'High',
+            ActorId: 'NAIRA',
+            ActorType: '',
+            ActorDisplayText: '',
+            ActorImageURL: 'https://scn.sap.com/people/guest/avatar/NAIRA.png',
+            Properties: [
+                { Key: 'number', Language: 'en', Value: PropertiesKey['number'], Type: 'String', IsSensitive: false },
+                { Key: 'number', Language: 'it', Value: PropertiesKey['number'], Type: 'String', IsSensitive: false },
+                { Key: 'requester_email', Language: 'en', Value: PropertiesKey['requester_email'], Type: 'String', IsSensitive: false },
+                { Key: 'count_total', Language: 'en', Value: PropertiesKey['count_total'], Type: 'Integer', IsSensitive: true },
+                { Key: 'count_total', Language: 'IT', Value: PropertiesKey['count_total'], Type: 'Integer', IsSensitive: true }
             ],
             Recipients: othersProp['Recipients']
         }
