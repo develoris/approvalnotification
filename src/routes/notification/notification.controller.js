@@ -6,16 +6,17 @@ const notificationService = new NotificationService();
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const getNotificationType = async (req, res) => {
-    console.log(req.oauth2)
-    return res.send('get notification type');
+const sendPurchasesRequestNotification = async (req, res) => {
+    const notification = notificationService.buildNotificationForPurchasesRequest(req.body);
+    await notificationService.sendNotificatiuonPurchasesRequest(await req.oauth2.getToken(), notification)
+    return res.status(200).send('get notification type');
 }
 /**
  * 
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const createNotification = async (req, res) => {
+const sendNotification = async (req, res) => {
     try {
         const token = await req.oauth2.getToken()
         const notification = notificationService.buildNotificationForTest(req.body)
@@ -25,4 +26,4 @@ const createNotification = async (req, res) => {
         console.log(error);
     }
 }
-module.exports = { getNotificationType, createNotification };
+module.exports = { sendNotification, sendPurchasesRequestNotification };
