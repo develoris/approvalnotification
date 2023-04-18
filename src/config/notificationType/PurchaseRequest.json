@@ -1,0 +1,22 @@
+{
+    "NotificationTypeKey": "PurchaseRequest",
+    "NotificationTypeVersion": "0.1",
+    "Templates": [
+        {
+            "Language": "en",
+            "TemplatePublic": "A new Purchase Request of {{number}} is created",
+            "TemplateSensitive": "Purchase Request by {{requester_email}} with {{number}}",
+            "TemplateGrouped": "You have {{count_total}} purchase request(s) for approval",
+            "TemplateLanguage": "Mustache",
+            "Subtitle": "Purchase Request"
+        },
+        {
+            "Language": "it",
+            "TemplatePublic": "Una nuova Richiesta di Acquisto con numero {{number}} è stata creata",
+            "TemplateSensitive": "Richiesta di Acquisto da {{requester_email}} con n° {{number}}",
+            "TemplateGrouped": "Hai {{count_total}} Richieste di Acquisto da approvare",
+            "TemplateLanguage": "Mustache",
+            "Subtitle": "Richieste di Acquisto"
+        }
+    ]
+}
