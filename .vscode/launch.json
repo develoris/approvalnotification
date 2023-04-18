@@ -18,6 +18,12 @@
             "name": "run watch command",
             "request": "launch",
             "type": "node-terminal"
+          },
+          {
+            "command": "npm run generate-notification-type",
+            "name": "run generate-notification-type command",
+            "request": "launch",
+            "type": "node-terminal"
           }
     ]
 }

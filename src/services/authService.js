@@ -24,6 +24,7 @@ class AuthService {
         const authResponse = await AXIOS_AUTH.get("/oauth/token?grant_type=client_credentials", { auth: authCredentials })
         this.token = authResponse.data.access_token;
         this.token_expiration = moment.utc().add(authResponse.data.expires_in - (60 * 5), 'seconds');
+        return authResponse.data;
     }
 }
 

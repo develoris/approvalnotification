@@ -16,9 +16,13 @@ const getNotificationType = async (req, res) => {
  * @param {express.Response} res 
  */
 const createNotification = async (req, res) => {
-    const token = await req.oauth2.getToken()
-    const notification= notificationService.buildNotificationForTest(req.body)
-    await notificationService.sendNotification(token, notification);
-    res.send('true');
+    try {
+        const token = await req.oauth2.getToken()
+        const notification = notificationService.buildNotificationForTest(req.body)
+        await notificationService.sendNotification(token, notification);
+        res.send('true');
+    } catch (error) {
+        console.log(error);
+    }
 }
 module.exports = { getNotificationType, createNotification };

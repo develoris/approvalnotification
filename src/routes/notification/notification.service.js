@@ -23,28 +23,34 @@ class NotificationService {
     }
     /**
      * @param {string} accessToken 
+     * @return {Promise<string[]>}
+     */
+    async getAllNotificationsType(accessToken) {
+        const responseAllNotification = await AXIOS_NOTIFICATION.get("/v2/NotificationType.svc/NotificationTypes", {
+            headers: await this.getCommonHeaders(accessToken)
+        })
+        return responseAllNotification.data.d.results;
+    }
+    /**
+     * @param {string} accessToken 
      * @param {object} notification 
      * @returns {Promise}
      */
     async sendNotification(accessToken, notification) {
-        try {
-            const responseCsfr = await this.getNotificationsCsfr(accessToken)
-            const headers = {
-                'Authorization': `Bearer ${accessToken}`,
-                'X-CSRF-Token': responseCsfr['x-csrf-token'],
-                'Cookie': responseCsfr['set-cookie'],
-                'Accept': 'application/json'
-            };
-            const postNotResp = await AXIOS_NOTIFICATION.post('/v2/Notification.svc/Notifications',
-                notification,
-                { headers })
-            console.log(postNotResp.data)
-            // const notificationTypeResponse = await axios.get('/v2/NotificationType.svc/NotificationTypes', { headers })
-        } catch (error) {
-            console.log(error);
-        }
+        const headers = await this.getCommonHeaders(accessToken)
+        const postNotResp = await AXIOS_NOTIFICATION.post('/v2/Notification.svc/Notifications',
+            notification,
+            { headers })
     }
 
+    async createNotificationType(accessToken, notificationType) {
+        const headers = await this.getCommonHeaders(accessToken)
+
+        const notificationTypeResponse = await AXIOS_NOTIFICATION.post("/v2/NotificationType.svc/NotificationTypes", notificationType, {
+            headers
+        })
+        console.log(`notification type ${notificationTypeResponse.data.d.NotificationTypeKey} created`);
+    }
     buildNotificationForTest({ PropertiesKey, ...othersProp }) {
         const notification = {
             OriginId: 'leave-req-dest',
@@ -65,6 +71,14 @@ class NotificationService {
             Recipients: othersProp['Recipients']
         }
         return notification;
+    }
+    async getCommonHeaders(accessToken) {
+        const responseCsfr = await this.getNotificationsCsfr(accessToken)
+        return {
+            'Authorization': `Bearer ${accessToken}`,
+            'X-CSRF-Token': responseCsfr['x-csrf-token'],
+            'Cookie': responseCsfr['set-cookie'],
+        };
     }
 }
 
