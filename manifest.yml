@@ -1,0 +1,8 @@
+---
+applications:
+  - name: prapprovalnotification
+    random-route: true
+    path: .
+    buildpack: nodejs_buildpack
+    memory: 128M
+    command: node src/server.js

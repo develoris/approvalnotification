@@ -26,4 +26,12 @@ const sendNotification = async (req, res) => {
         console.log(error);
     }
 }
-module.exports = { sendNotification, sendPurchasesRequestNotification };
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+const getNotificationType = async (req, res) => {
+    res.send('hello world notification')
+}
+module.exports = { sendNotification, sendPurchasesRequestNotification, getNotificationType };
