@@ -1,0 +1,20 @@
+@server=http://localhost:8080
+
+#------------------------------------------
+#send purchases notification
+POST {{server}}/api/v1/notification/purchasesrequest
+Accept: application/json
+Content-Type: application/json
+
+{
+    "PropertiesKey": {
+        "requester_email": "loris.beltramo@dncsrl.com",
+        "number": "10558876",
+        "count_total": "4"
+    },
+    "Recipients": [
+        {
+            "RecipientId": "loris.beltramo@dncsrl.com"
+        }
+    ]
+}

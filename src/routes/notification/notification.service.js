@@ -104,7 +104,13 @@ class NotificationService {
                 { Key: 'count_total', Language: 'en', Value: PropertiesKey['count_total'], Type: 'Integer', IsSensitive: true },
                 { Key: 'count_total', Language: 'IT', Value: PropertiesKey['count_total'], Type: 'Integer', IsSensitive: true }
             ],
-            Recipients: othersProp['Recipients']
+            Recipients: othersProp['Recipients'],
+            TargetParameters: [
+                {
+                    "Key": "notification",
+                    "Value": "true"
+                }
+            ]
         }
         return notification;
     }
